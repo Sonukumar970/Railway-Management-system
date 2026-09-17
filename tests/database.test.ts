@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-import { createDatabase, listTrains, createTrain, createBooking } from '../src/database.ts';
+import { createDatabase, listTrains, createTrain, createBooking } from '../backend/src/database.ts';
 
 test('database stores trains and bookings persistently', async () => {
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'railway-db-'));

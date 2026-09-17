@@ -1,23 +1,29 @@
-# My Project
+# Railway Management System
 
 ## Overview
-This project is a web application built using TypeScript. It serves as a template for developing scalable and maintainable applications.
+RailConnect is a TypeScript and Express railway operations portal with separate staff and admin access, train management, route monitoring, and booking workflows.
 
 ## Project Structure
 ```
 my-project
-├── src
-│   ├── app.ts
-│   ├── components
-│   │   └── index.ts
-│   ├── services
-│   │   └── index.ts
-│   ├── utils
-│   │   └── index.ts
-│   └── types
-│       └── index.ts
-├── public
-│   └── index.html
+├── backend
+│   └── src
+│       ├── app.ts
+│       ├── database.ts
+│       ├── dataStore.ts
+│       ├── components
+│       ├── services
+│       ├── types
+│       └── utils
+├── frontend
+│   └── public
+│       ├── index.html
+│       ├── admin-login.html
+│       ├── admin.html
+│       ├── app.js
+│       └── styles.css
+├── api
+│   └── index.ts
 ├── package.json
 ├── tsconfig.json
 ├── .gitignore
@@ -44,7 +50,22 @@ To start the application, run:
 ```
 npm start
 ```
-This will compile the TypeScript files and serve the application.
+This starts the Express backend and serves the frontend at `http://localhost:3000`.
+
+## Access
+
+- Staff portal: `http://localhost:3000/`
+- Admin login: `http://localhost:3000/admin`
+- Admin dashboard: `http://localhost:3000/admin/dashboard`
+
+## Build and tests
+
+```bash
+npm test
+npm run build
+```
+
+The `api/index.ts` file is the Vercel serverless adapter. The application is deployed with the frontend and backend from the same project.
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.

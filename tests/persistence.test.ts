@@ -4,8 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 
-import { readJson, writeJson } from '../src/dataStore.ts';
-import { createDatabase, createTrain, listTrains } from '../src/database.ts';
+import { readJson, writeJson } from '../backend/src/dataStore.ts';
+import { createDatabase, createTrain, listTrains } from '../backend/src/database.ts';
 
 test('readJson creates fallback data and writeJson persists updates', async () => {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'railway-state-'));

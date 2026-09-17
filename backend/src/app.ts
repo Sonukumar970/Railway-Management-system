@@ -126,7 +126,7 @@ const isServerlessRuntime = Boolean(
   __dirname.startsWith('/var/task') ||
   process.cwd().startsWith('/var/task'),
 );
-const dataPath = isServerlessRuntime ? path.join('/tmp', 'railway-data') : path.join(__dirname, '../data');
+const dataPath = isServerlessRuntime ? path.join('/tmp', 'railway-data') : path.join(__dirname, '../../data');
 const stateFile = path.join(dataPath, 'state.json');
 
 const db = createDatabase(path.join(__dirname, '../data/railway.db'));
@@ -161,7 +161,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../../frontend/public')));
 
 app.get('/api/overview', (_req: Request, res: Response) => {
   const totalBookings = bookings.length;
@@ -399,15 +399,15 @@ app.get('/api/routes', (_req: Request, res: Response) => {
 });
 
 app.get('/admin', (_req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../public/admin-login.html'));
+  res.sendFile(path.join(__dirname, '../../frontend/public/admin-login.html'));
 });
 
 app.get('/admin/dashboard', (_req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../public/admin.html'));
+  res.sendFile(path.join(__dirname, '../../frontend/public/admin.html'));
 });
 
 app.get('*', (_req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(__dirname, '../../frontend/public/index.html'));
 });
 
 export default app;
