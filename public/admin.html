@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RailConnect Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            boxShadow: {
+              glow: '0 20px 60px rgba(59, 130, 246, 0.16)'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <header class="mb-6 flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-900/80 p-4 shadow-glow lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-sky-300">Admin panel</p>
+          <h1 class="mt-2 text-2xl font-bold text-white sm:text-3xl">RailConnect Admin</h1>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="admin-user" class="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm font-medium text-emerald-200">Operations Admin</div>
+          <button id="back-to-dashboard" type="button" class="rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-700">Main dashboard</button>
+          <button id="admin-logout" type="button" class="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm font-semibold text-rose-200 hover:bg-rose-500/20">Logout</button>
+        </div>
+      </header>
+
+      <main class="space-y-6">
+        <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-4"><p class="text-xs uppercase tracking-[0.2em] text-slate-400">Revenue</p><p class="mt-3 text-3xl font-bold text-white">₹28.7L</p><p class="mt-2 text-sm text-emerald-300">+18% this week</p></article>
+          <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-4"><p class="text-xs uppercase tracking-[0.2em] text-slate-400">Booked</p><p class="mt-3 text-3xl font-bold text-white">6,482</p><p class="mt-2 text-sm text-sky-300">Across all routes</p></article>
+          <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-4"><p class="text-xs uppercase tracking-[0.2em] text-slate-400">Delayed</p><p class="mt-3 text-3xl font-bold text-white">06</p><p class="mt-2 text-sm text-amber-300">Need attention</p></article>
+          <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-4"><p class="text-xs uppercase tracking-[0.2em] text-slate-400">Staff</p><p class="mt-3 text-3xl font-bold text-white">128</p><p class="mt-2 text-sm text-violet-300">On duty now</p></article>
+        </section>
+
+        <section class="grid gap-6 xl:grid-cols-[1.5fr_1fr]">
+          <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+            <div class="mb-4 flex items-center justify-between">
+              <h2 class="text-xl font-semibold text-white">Operational routes</h2>
+              <span class="rounded-full bg-sky-500/10 px-2.5 py-1 text-xs font-semibold text-sky-300">Live</span>
+            </div>
+            <div id="admin-routes" class="space-y-3"></div>
+          </article>
+
+          <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+            <div class="mb-4 flex items-center justify-between">
+              <h2 class="text-xl font-semibold text-white">Action center</h2>
+              <span class="rounded-full bg-violet-500/10 px-2.5 py-1 text-xs font-semibold text-violet-300">Quick</span>
+            </div>
+            <div class="space-y-3">
+              <button id="action-schedule" type="button" class="w-full rounded-xl border border-slate-700 bg-slate-950/60 px-4 py-3 text-left text-sm font-medium text-slate-100 hover:border-sky-500">Schedule update</button>
+              <button id="action-allocation" type="button" class="w-full rounded-xl border border-slate-700 bg-slate-950/60 px-4 py-3 text-left text-sm font-medium text-slate-100 hover:border-sky-500">Train allocation</button>
+              <button id="action-health" type="button" class="w-full rounded-xl border border-slate-700 bg-slate-950/60 px-4 py-3 text-left text-sm font-medium text-slate-100 hover:border-sky-500">Route health report</button>
+              <button id="action-crew" type="button" class="w-full rounded-xl border border-slate-700 bg-slate-950/60 px-4 py-3 text-left text-sm font-medium text-slate-100 hover:border-sky-500">Crew management</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-white">Train management</h2>
+            <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300">Edit & delete</span>
+          </div>
+
+          <form id="admin-train-form" class="mb-5 space-y-4">
+            <input type="hidden" id="admin-train-edit-id" name="trainId" />
+            <div class="grid gap-4 md:grid-cols-2">
+              <input type="text" name="name" placeholder="Train name" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              <input type="text" name="route" placeholder="Route" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <input type="time" name="departure" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white focus:border-sky-500 focus:outline-none" required />
+              <input type="time" name="arrival" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white focus:border-sky-500 focus:outline-none" required />
+            </div>
+            <div class="grid gap-4 md:grid-cols-3">
+              <select name="status" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white focus:border-sky-500 focus:outline-none" required>
+                <option value="On Time">On Time</option>
+                <option value="Delayed">Delayed</option>
+                <option value="Boarding">Boarding</option>
+              </select>
+              <input type="number" name="capacity" placeholder="Capacity" min="1" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              <input type="number" name="booked" placeholder="Booked" min="0" value="0" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" />
+            </div>
+            <div class="flex gap-3">
+              <button type="submit" class="rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-3 text-sm font-semibold text-white">Save train</button>
+              <button type="button" id="admin-cancel-edit" class="rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-200">Cancel</button>
+            </div>
+          </form>
+
+          <div id="admin-train-list" class="overflow-x-auto"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="action-modal" class="fixed inset-0 z-20 hidden items-center justify-center bg-slate-950/80 p-4">
+      <section class="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-3xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.25em] text-sky-300">Operations</p>
+            <h2 id="action-modal-title" class="mt-2 text-2xl font-bold text-white"></h2>
+          </div>
+          <button id="action-modal-close" type="button" class="rounded-lg border border-slate-700 px-3 py-2 text-slate-300 hover:bg-slate-800">Close</button>
+        </div>
+        <div id="action-modal-content" class="mt-6"></div>
+      </section>
+    </div>
+
+    <script>
+      const currentUser = JSON.parse(localStorage.getItem('railway-user') || 'null');
+      if (!currentUser || currentUser.role !== 'admin') {
+        window.location.href = '/';
+      }
+
+      document.getElementById('admin-user').textContent = `${currentUser.name} · ${currentUser.role}`;
+
+      document.getElementById('back-to-dashboard').addEventListener('click', () => {
+        window.location.href = '/';
+      });
+
+      document.getElementById('admin-logout').addEventListener('click', () => {
+        localStorage.removeItem('railway-user');
+        window.location.href = '/';
+      });
+
+      const formatStatus = (status) => {
+        const normalized = String(status || '').toLowerCase().replace(/\s+/g, '-');
+        return `<span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+          normalized.includes('on-time') ? 'bg-emerald-500/10 text-emerald-300' :
+          normalized.includes('delayed') ? 'bg-rose-500/10 text-rose-300' :
+          normalized.includes('boarding') ? 'bg-amber-500/10 text-amber-300' :
+          'bg-slate-500/10 text-slate-300'
+        }">${status}</span>`;
+      };
+
+      const renderRouteCards = (routes) => {
+        document.getElementById('admin-routes').innerHTML = routes.map((route) => `
+          <div class="rounded-2xl border border-slate-800 bg-slate-950/60 p-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-lg font-semibold text-white">${route.from} → ${route.to}</p>
+                <p class="text-sm text-slate-400">${route.id}</p>
+              </div>
+              <span class="rounded-full bg-sky-500/10 px-2 py-1 text-xs font-semibold text-sky-300">${route.status}</span>
+            </div>
+          </div>
+        `).join('');
+      };
+
+      const renderAdminTrainTable = (trains) => {
+        const root = document.getElementById('admin-train-list');
+        if (!root) return;
+
+        root.innerHTML = `
+          <table class="min-w-full border-separate border-spacing-y-2 text-left text-sm text-slate-300">
+            <thead>
+              <tr class="text-slate-400">
+                <th class="pb-2 font-medium">Train</th>
+                <th class="pb-2 font-medium">Route</th>
+                <th class="pb-2 font-medium">Schedule</th>
+                <th class="pb-2 font-medium">Status</th>
+                <th class="pb-2 font-medium">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${trains.map((train) => `
+                <tr class="rounded-2xl bg-slate-950/60">
+                  <td class="rounded-l-2xl px-3 py-3"><strong class="text-white">${train.name}</strong><br><small class="text-slate-400">${train.id}</small></td>
+                  <td class="px-3 py-3">${train.route}</td>
+                  <td class="px-3 py-3">${train.departure} - ${train.arrival}</td>
+                  <td class="px-3 py-3">${formatStatus(train.status)}</td>
+                  <td class="rounded-r-2xl px-3 py-3">
+                    <div class="flex gap-2">
+                      <button class="rounded-lg bg-sky-500/10 px-2 py-1 text-xs font-semibold text-sky-300 admin-edit" data-train-id="${train.id}">Edit</button>
+                      <button class="rounded-lg bg-rose-500/10 px-2 py-1 text-xs font-semibold text-rose-300 admin-delete" data-train-id="${train.id}">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      };
+
+      const resetForm = () => {
+        const form = document.getElementById('admin-train-form');
+        const editId = document.getElementById('admin-train-edit-id');
+        form.reset();
+        editId.value = '';
+        form.elements.booked.value = 0;
+      };
+
+      const actionModal = document.getElementById('action-modal');
+      const actionModalTitle = document.getElementById('action-modal-title');
+      const actionModalContent = document.getElementById('action-modal-content');
+      let adminTrains = [];
+
+      const closeActionModal = () => {
+        actionModal.classList.add('hidden');
+        actionModal.classList.remove('flex');
+        actionModalContent.innerHTML = '';
+      };
+
+      const openActionModal = (title, content) => {
+        actionModalTitle.textContent = title;
+        actionModalContent.innerHTML = content;
+        actionModal.classList.remove('hidden');
+        actionModal.classList.add('flex');
+      };
+
+      const trainOptions = () => adminTrains.map((train) =>
+        `<option value="${train.id}">${train.name} (${train.id})</option>`
+      ).join('');
+
+      const saveOperationalTrain = async (event, fields) => {
+        event.preventDefault();
+        const form = event.target;
+        const trainId = form.elements.trainId.value;
+        const train = adminTrains.find((item) => item.id === trainId);
+        const payload = { ...train, ...fields(form) };
+        const response = await fetch(`/api/trains/${trainId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+          alert('Unable to save the operational update.');
+          return;
+        }
+        closeActionModal();
+        await loadAdminData();
+      };
+
+      document.getElementById('action-schedule').addEventListener('click', () => {
+        openActionModal('Schedule update', `
+          <form id="schedule-action-form" class="space-y-4">
+            <select name="trainId" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-white" required>${trainOptions()}</select>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <input name="departure" type="time" class="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-white" required />
+              <input name="arrival" type="time" class="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-white" required />
+            </div>
+            <select name="status" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-white"><option>On Time</option><option>Delayed</option><option>Boarding</option></select>
+            <button class="w-full rounded-xl bg-sky-500 px-4 py-3 font-semibold text-white hover:bg-sky-400">Save schedule</button>
+          </form>
+        `);
+        document.getElementById('schedule-action-form').addEventListener('submit', (event) => saveOperationalTrain(event, (form) => ({
+          departure: form.elements.departure.value,
+          arrival: form.elements.arrival.value,
+          status: form.elements.status.value,
+        })));
+      });
+
+      document.getElementById('action-allocation').addEventListener('click', () => {
+        openActionModal('Train allocation', `
+          <form id="allocation-action-form" class="space-y-4">
+            <select name="trainId" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-white" required>${trainOptions()}</select>
+            <input name="route" placeholder="Assigned route, e.g. New Delhi -> Mumbai" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-white placeholder:text-slate-500" required />
+            <button class="w-full rounded-xl bg-emerald-500 px-4 py-3 font-semibold text-white hover:bg-emerald-400">Assign train</button>
+          </form>
+        `);
+        document.getElementById('allocation-action-form').addEventListener('submit', (event) => saveOperationalTrain(event, (form) => ({
+          route: form.elements.route.value,
+        })));
+      });
+
+      document.getElementById('action-health').addEventListener('click', async () => {
+        const [routesResponse, trainsResponse] = await Promise.all([fetch('/api/routes'), fetch('/api/trains')]);
+        const routes = await routesResponse.json();
+        const trains = await trainsResponse.json();
+        const delayed = trains.filter((train) => train.status === 'Delayed');
+        openActionModal('Route health report', `
+          <div class="space-y-3 text-sm text-slate-300">
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4"><strong class="text-white">${routes.length}</strong> monitored routes</div>
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4"><strong class="text-white">${trains.length - delayed.length}/${trains.length}</strong> trains on schedule</div>
+            ${delayed.length ? `<div class="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 text-rose-200"><strong>Attention:</strong> ${delayed.map((train) => train.name).join(', ')} delayed.</div>` : '<div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-200">All trains are operating on time.</div>'}
+            <div class="space-y-2">${routes.map((route) => `<div class="flex items-center justify-between rounded-xl bg-slate-950/60 px-3 py-3"><span>${route.id} · ${route.from} → ${route.to}</span><strong class="text-sky-300">${route.status}</strong></div>`).join('')}</div>
+          </div>
+        `);
+      });
+
+      document.getElementById('action-crew').addEventListener('click', async () => {
+        const response = await fetch('/api/crew');
+        const crew = await response.json();
+        openActionModal('Crew management', `
+          <div class="space-y-3">${crew.map((member) => `
+            <div class="flex items-center justify-between rounded-2xl border border-slate-700 bg-slate-950/60 p-4">
+              <div><strong class="text-white">${member.name}</strong><p class="text-sm text-slate-400">${member.username} · ${member.role}</p></div>
+              <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">${member.status}</span>
+            </div>
+          `).join('')}</div>
+        `);
+      });
+
+      document.getElementById('action-modal-close').addEventListener('click', closeActionModal);
+      actionModal.addEventListener('click', (event) => {
+        if (event.target === actionModal) closeActionModal();
+      });
+
+      const populateForm = (train) => {
+        const form = document.getElementById('admin-train-form');
+        form.elements.name.value = train.name;
+        form.elements.route.value = train.route;
+        form.elements.departure.value = train.departure;
+        form.elements.arrival.value = train.arrival;
+        form.elements.status.value = train.status;
+        form.elements.capacity.value = train.capacity;
+        form.elements.booked.value = train.booked;
+        document.getElementById('admin-train-edit-id').value = train.id;
+      };
+
+      async function loadAdminData() {
+        const [routesRes, trainsRes] = await Promise.all([
+          fetch('/api/routes'),
+          fetch('/api/trains')
+        ]);
+
+        const routes = await routesRes.json();
+        const trains = await trainsRes.json();
+        adminTrains = trains;
+        renderRouteCards(routes);
+        renderAdminTrainTable(trains);
+      }
+
+      document.getElementById('admin-train-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const trainId = document.getElementById('admin-train-edit-id').value;
+        const payload = {
+          name: formData.get('name'),
+          route: formData.get('route'),
+          departure: formData.get('departure'),
+          arrival: formData.get('arrival'),
+          status: formData.get('status'),
+          capacity: Number(formData.get('capacity')),
+          booked: Number(formData.get('booked') || 0),
+        };
+
+        const response = await fetch(trainId ? `/api/trains/${trainId}` : '/api/trains', {
+          method: trainId ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          alert('Unable to save train details.');
+          return;
+        }
+
+        resetForm();
+        await loadAdminData();
+      });
+
+      document.getElementById('admin-cancel-edit').addEventListener('click', resetForm);
+
+      document.getElementById('admin-train-list').addEventListener('click', async (event) => {
+        const editBtn = event.target.closest('.admin-edit');
+        const deleteBtn = event.target.closest('.admin-delete');
+
+        if (editBtn) {
+          const trainId = editBtn.dataset.trainId;
+          const response = await fetch('/api/trains');
+          const trains = await response.json();
+          const item = trains.find((train) => train.id === trainId);
+          if (item) populateForm(item);
+          return;
+        }
+
+        if (deleteBtn) {
+          const trainId = deleteBtn.dataset.trainId;
+          const response = await fetch(`/api/trains/${trainId}`, { method: 'DELETE' });
+          if (response.ok) {
+            await loadAdminData();
+          }
+        }
+      });
+
+      loadAdminData();
+    </script>
+  </body>
+</html>

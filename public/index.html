@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RailConnect Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            boxShadow: {
+              glow: '0 20px 60px rgba(59, 130, 246, 0.18)',
+            },
+            colors: {
+              railway: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#2563eb',
+                600: '#1d4ed8',
+                900: '#0f172a'
+              }
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <div id="auth-shell" class="min-h-screen bg-[radial-gradient(circle_at_top,_#1e3a8a,_#0f172a_40%,_#020617_100%)] px-4 py-8 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-6xl">
+        <header class="mb-8 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-sm">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300">RailConnect</p>
+            <h1 class="text-xl font-bold text-white sm:text-2xl">Railway Control Hub</h1>
+          </div>
+          <div class="rounded-full border border-sky-400/40 bg-sky-500/10 px-3 py-1 text-xs font-medium text-sky-200">Live operations</div>
+        </header>
+
+        <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <section class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-glow backdrop-blur-sm sm:p-8">
+            <div class="mb-6 flex items-center justify-between">
+              <div>
+                <p class="text-sm uppercase tracking-[0.25em] text-slate-300">Network status</p>
+                <h2 class="mt-2 text-3xl font-bold text-white">Move every journey forward</h2>
+              </div>
+              <div class="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-3 py-2 text-sm font-semibold text-emerald-300">Operational</div>
+            </div>
+
+            <p class="max-w-xl text-base leading-7 text-slate-300">
+              Monitor train availability, booking flow, route health, and station activity from a single operational command center designed for modern railway teams.
+            </p>
+
+            <div class="mt-8 grid gap-4 sm:grid-cols-3">
+              <div class="rounded-2xl border border-white/10 bg-slate-900/40 p-4">
+                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Trains</p>
+                <p class="mt-3 text-3xl font-bold text-white">42</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-slate-900/40 p-4">
+                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Seats</p>
+                <p class="mt-3 text-3xl font-bold text-white">12.8k</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-slate-900/40 p-4">
+                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Stations</p>
+                <p class="mt-3 text-3xl font-bold text-white">128</p>
+              </div>
+            </div>
+
+            <div class="mt-8 grid gap-3 sm:grid-cols-3">
+              <div class="rounded-2xl border border-sky-400/15 bg-sky-500/5 p-3 text-sm text-slate-200">
+                <span class="mb-2 block text-xs uppercase tracking-[0.2em] text-sky-300">Dispatch</span>
+                Live train state
+              </div>
+              <div class="rounded-2xl border border-violet-400/15 bg-violet-500/5 p-3 text-sm text-slate-200">
+                <span class="mb-2 block text-xs uppercase tracking-[0.2em] text-violet-300">Bookings</span>
+                Instant reservations
+              </div>
+              <div class="rounded-2xl border border-emerald-400/15 bg-emerald-500/5 p-3 text-sm text-slate-200">
+                <span class="mb-2 block text-xs uppercase tracking-[0.2em] text-emerald-300">Routes</span>
+                Smart routing
+              </div>
+            </div>
+
+            <div class="mt-8 rounded-2xl border border-sky-400/20 bg-sky-500/5 p-4">
+              <div class="flex items-center justify-between text-sm text-slate-200">
+                <span>Average punctuality</span>
+                <span class="font-bold text-sky-300">96.4%</span>
+              </div>
+              <div class="mt-4 h-2.5 overflow-hidden rounded-full bg-slate-700">
+                <div class="h-full w-[96%] rounded-full bg-gradient-to-r from-sky-400 via-cyan-400 to-emerald-400"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-3xl border border-white/10 bg-slate-900/70 p-6 shadow-glow backdrop-blur-sm sm:p-8">
+            <div class="flex items-center gap-3 pb-6">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-500/15 text-lg font-bold text-sky-300">R</div>
+              <div>
+                <p class="text-xs uppercase tracking-[0.22em] text-slate-400">Access portal</p>
+                <h2 class="text-xl font-bold text-white">Welcome back</h2>
+              </div>
+            </div>
+
+            <div class="mb-6 inline-flex w-full rounded-2xl border border-slate-700 bg-slate-800/80 p-1">
+              <button id="show-login" type="button" class="auth-tab flex-1 rounded-xl bg-sky-500 px-3 py-2 text-sm font-semibold text-white">Login</button>
+              <button id="show-register" type="button" class="auth-tab flex-1 rounded-xl px-3 py-2 text-sm font-semibold text-slate-300">Create account</button>
+            </div>
+
+            <form id="login-form" class="auth-form space-y-4">
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Username</label>
+                <input type="text" name="username" placeholder="Enter username" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Password</label>
+                <input type="password" name="password" placeholder="Enter password" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:from-sky-400 hover:to-blue-500">Sign in to dashboard</button>
+              <button id="forgot-password-btn" type="button" class="w-full text-center text-sm font-medium text-sky-300 transition hover:text-sky-200">Forgot password?</button>
+            </form>
+
+            <form id="reset-form" class="auth-form hidden space-y-4">
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Username or email</label>
+                <input type="text" name="resetIdentifier" placeholder="Enter your username or email" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-violet-500 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition hover:from-violet-400 hover:to-indigo-500">Send reset link</button>
+              <button id="back-to-login-btn" type="button" class="w-full text-center text-sm font-medium text-slate-300 transition hover:text-white">Back to login</button>
+            </form>
+
+            <form id="register-form" class="auth-form hidden space-y-4">
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Full name</label>
+                <input type="text" name="name" placeholder="Enter full name" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Username</label>
+                <input type="text" name="username" placeholder="Choose username" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-medium text-slate-200">Password</label>
+                <input type="password" name="password" placeholder="Create strong password" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:from-emerald-400 hover:to-teal-500">Create account</button>
+            </form>
+
+            <div class="mt-5 text-xs text-slate-400">
+              Demo access: <span class="font-semibold text-sky-300">admin / railway123</span> or <span class="font-semibold text-emerald-300">staff / staff123</span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div id="dashboard-shell" class="hidden min-h-screen bg-slate-950 px-4 py-6 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <header class="mb-6 flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-900/80 p-4 shadow-glow backdrop-blur lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p class="text-xs uppercase tracking-[0.28em] text-sky-300">Operations dashboard</p>
+            <h1 class="mt-2 text-2xl font-bold text-white sm:text-3xl">RailConnect Pro</h1>
+          </div>
+          <div class="flex items-center gap-3">
+            <div id="auth-status" class="flex items-center gap-3 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-2 text-sm font-medium text-sky-200"></div>
+            <button id="logout-btn" type="button" class="rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700">Log out</button>
+          </div>
+        </header>
+
+        <main class="space-y-6">
+          <section id="overview" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"></section>
+
+          <section class="grid gap-4 md:grid-cols-3">
+            <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-4">
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Today</p>
+              <p class="mt-3 text-2xl font-bold text-white">₹14.8L</p>
+              <p class="mt-2 text-sm text-emerald-300">+12.4% vs yesterday</p>
+            </article>
+            <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-4">
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Pending</p>
+              <p class="mt-3 text-2xl font-bold text-white">184</p>
+              <p class="mt-2 text-sm text-amber-300">Ticket checks needed</p>
+            </article>
+            <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-4">
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Network</p>
+              <p class="mt-3 text-2xl font-bold text-white">96.4%</p>
+              <p class="mt-2 text-sm text-sky-300">Operational efficiency</p>
+            </article>
+          </section>
+
+          <section class="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
+            <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+              <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-xl font-semibold text-white">Add booking</h2>
+                <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300">New reservation</span>
+              </div>
+              <form id="booking-form" class="space-y-4">
+                <div class="grid gap-4 md:grid-cols-2">
+                  <input type="text" name="passenger" placeholder="Passenger name" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                  <input type="text" name="trainId" placeholder="Train ID" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                  <input type="text" name="from" placeholder="From" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                  <input type="text" name="to" placeholder="To" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                  <input type="text" name="seat" placeholder="Seat" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                  <input type="number" name="amount" placeholder="Amount" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                </div>
+                <button type="submit" class="w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:from-sky-400 hover:to-blue-500">Confirm booking</button>
+              </form>
+            </article>
+
+            <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+              <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-xl font-semibold text-white">Station pulse</h2>
+                <span class="rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-300">Today</span>
+              </div>
+              <div id="stations" class="space-y-3"></div>
+            </article>
+          </section>
+
+          <section class="grid gap-6 xl:grid-cols-2">
+            <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+              <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-xl font-semibold text-white">Train schedule</h2>
+                <span class="rounded-full bg-sky-500/10 px-2.5 py-1 text-xs font-semibold text-sky-300">Live</span>
+              </div>
+              <div id="trains" class="overflow-x-auto"></div>
+            </article>
+
+            <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+              <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-xl font-semibold text-white">Booking updates</h2>
+                <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300">Updated</span>
+              </div>
+              <div id="bookings" class="overflow-x-auto"></div>
+            </article>
+          </section>
+
+          <section id="train-management-section" class="hidden rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+            <div class="mb-4 flex items-center justify-between">
+              <h2 class="text-xl font-semibold text-white">Train management</h2>
+              <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300">Admin</span>
+            </div>
+
+            <form id="train-form" class="mb-5 space-y-4">
+              <input type="hidden" id="train-edit-id" name="trainId" />
+              <div class="grid gap-4 md:grid-cols-2">
+                <input type="text" name="name" placeholder="Train name" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                <input type="text" name="route" placeholder="Route" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <div class="grid gap-4 md:grid-cols-2">
+                <input type="time" name="departure" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white focus:border-sky-500 focus:outline-none" required />
+                <input type="time" name="arrival" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white focus:border-sky-500 focus:outline-none" required />
+              </div>
+              <div class="grid gap-4 md:grid-cols-3">
+                <select name="status" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white focus:border-sky-500 focus:outline-none" required>
+                  <option value="On Time">On Time</option>
+                  <option value="Delayed">Delayed</option>
+                  <option value="Boarding">Boarding</option>
+                </select>
+                <input type="number" name="capacity" placeholder="Capacity" min="1" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" required />
+                <input type="number" name="booked" placeholder="Booked" min="0" value="0" class="rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" />
+              </div>
+              <div class="flex gap-3">
+                <button type="submit" class="rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-3 text-sm font-semibold text-white">Save train</button>
+                <button type="button" id="cancel-train-edit" class="rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-200">Cancel</button>
+              </div>
+            </form>
+
+            <div id="train-admin-list" class="overflow-x-auto"></div>
+          </section>
+
+          <section class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+            <div class="mb-4 flex items-center justify-between gap-3">
+              <h2 class="text-xl font-semibold text-white">Route search</h2>
+              <span class="rounded-full bg-sky-500/10 px-2.5 py-1 text-xs font-semibold text-sky-300">Operations</span>
+            </div>
+            <div class="mb-4">
+              <input id="route-search" type="text" placeholder="Search city or route" class="w-full max-w-md rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-white placeholder:text-slate-400 focus:border-sky-500 focus:outline-none" />
+            </div>
+            <div id="routes" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
