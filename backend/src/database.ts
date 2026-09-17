@@ -25,11 +25,14 @@ export interface BookingRow {
 }
 
 export const createDatabase = (dbPath: string): Database.Database => {
-  const directory = path.dirname(dbPath);
+  const runtimeDbPath = dbPath.startsWith('/var/task')
+    ? path.join('/tmp', 'railway-data', path.basename(dbPath))
+    : dbPath;
+  const directory = path.dirname(runtimeDbPath);
 
   fs.mkdirSync(directory, { recursive: true });
 
-  const db = new Database(dbPath);
+  const db = new Database(runtimeDbPath);
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS trains (
