@@ -121,7 +121,7 @@ const initialRoutes: RouteInfo[] = [
   { id: 'RT-321', from: 'Jaipur', to: 'Bhopal', distance: '620 km', duration: '9h 10m', trains: 1, status: 'Available' },
 ];
 
-const dataPath = path.join(__dirname, '../data');
+const dataPath = process.env.VERCEL ? path.join('/tmp', 'railway-data') : path.join(__dirname, '../data');
 const stateFile = path.join(dataPath, 'state.json');
 
 const db = createDatabase(path.join(__dirname, '../data/railway.db'));
@@ -353,6 +353,10 @@ app.get('*', (_req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+export default app;
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
