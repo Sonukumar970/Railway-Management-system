@@ -319,6 +319,10 @@ app.post('/api/login', (req: Request, res: Response) => {
     return res.status(401).json({ message: 'Invalid username or password.' });
   }
 
+  if (user.role === 'admin') {
+    return res.status(403).json({ message: 'Use Admin access to sign in with an administrator account.' });
+  }
+
   const { password: _password, ...safeUser } = user;
   return res.json({ user: safeUser });
 });

@@ -232,18 +232,23 @@ const setAuthFormMode = (mode) => {
   const loginForm = document.getElementById('login-form');
   const registerForm = document.getElementById('register-form');
   const resetForm = document.getElementById('reset-form');
+  const adminLoginForm = document.getElementById('admin-login-form');
   const loginTab = document.getElementById('show-login');
   const registerTab = document.getElementById('show-register');
+  const adminLoginButton = document.getElementById('show-admin-login');
 
-  if (!loginForm || !registerForm || !resetForm || !loginTab || !registerTab) return;
+  if (!loginForm || !registerForm || !resetForm || !adminLoginForm || !loginTab || !registerTab || !adminLoginButton) return;
 
   const isLogin = mode === 'login';
   const isRegister = mode === 'register';
   const isReset = mode === 'reset';
+  const isAdminLogin = mode === 'admin-login';
 
   loginForm.classList.toggle('hidden', !isLogin);
   registerForm.classList.toggle('hidden', !isRegister);
   resetForm.classList.toggle('hidden', !isReset);
+  adminLoginForm.classList.toggle('hidden', !isAdminLogin);
+  adminLoginButton.classList.toggle('hidden', isAdminLogin);
 
   loginTab.classList.toggle('bg-sky-500', isLogin);
   loginTab.classList.toggle('text-white', isLogin);
@@ -263,11 +268,16 @@ const attachAuthHandlers = () => {
   const forgotPasswordBtn = document.getElementById('forgot-password-btn');
   const backToLoginBtn = document.getElementById('back-to-login-btn');
   const adminPanelButton = document.getElementById('admin-panel-btn');
+  const adminLoginForm = document.getElementById('admin-login-form');
+  const adminLoginButton = document.getElementById('show-admin-login');
+  const backFromAdminButton = document.getElementById('back-from-admin-btn');
 
   if (loginTab) loginTab.addEventListener('click', () => setAuthFormMode('login'));
   if (registerTab) registerTab.addEventListener('click', () => setAuthFormMode('register'));
   if (forgotPasswordBtn) forgotPasswordBtn.addEventListener('click', () => setAuthFormMode('reset'));
   if (backToLoginBtn) backToLoginBtn.addEventListener('click', () => setAuthFormMode('login'));
+  if (adminLoginButton) adminLoginButton.addEventListener('click', () => setAuthFormMode('admin-login'));
+  if (backFromAdminButton) backFromAdminButton.addEventListener('click', () => setAuthFormMode('login'));
   if (adminPanelButton) adminPanelButton.addEventListener('click', () => { window.location.href = '/admin/dashboard'; });
 
   if (loginForm) {
@@ -324,6 +334,27 @@ const attachAuthHandlers = () => {
       registerForm.reset();
       setAuthFormMode('login');
       alert('Account created successfully. Please login to continue.');
+    });
+  }
+
+  if (adminLoginForm) {
+    adminLoginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(adminLoginForm);
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: formData.get('username'), password: formData.get('password') }),
+      });
+
+      const result = await response.json().catch(() => ({ message: 'Admin login failed.' }));
+      if (!response.ok) {
+        alert(result.message || 'Admin access denied.');
+        return;
+      }
+
+      localStorage.setItem('railway-user', JSON.stringify(result.user));
+      window.location.href = '/admin/dashboard';
     });
   }
 
