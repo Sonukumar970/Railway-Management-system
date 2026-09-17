@@ -114,7 +114,7 @@
     <script>
       const currentUser = JSON.parse(localStorage.getItem('railway-user') || 'null');
       if (!currentUser || currentUser.role !== 'admin') {
-        window.location.href = '/';
+        window.location.href = '/admin';
       }
 
       document.getElementById('admin-user').textContent = `${currentUser.name} · ${currentUser.role}`;

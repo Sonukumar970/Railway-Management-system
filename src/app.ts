@@ -323,6 +323,28 @@ app.post('/api/login', (req: Request, res: Response) => {
   return res.json({ user: safeUser });
 });
 
+app.post('/api/admin/login', (req: Request, res: Response) => {
+  const { username, password } = req.body ?? {};
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Admin username and password are required.' });
+  }
+
+  const normalizedUsername = String(username).trim();
+  const user = staffUsers.find(
+    (entry) => entry.role === 'admin'
+      && entry.username.toLowerCase() === normalizedUsername.toLowerCase()
+      && entry.password === String(password),
+  );
+
+  if (!user) {
+    return res.status(401).json({ message: 'Admin access denied. Check your credentials.' });
+  }
+
+  const { password: _password, ...safeUser } = user;
+  return res.json({ user: safeUser });
+});
+
 app.get('/api/stations', (_req: Request, res: Response) => {
   res.json(stations);
 });
@@ -351,6 +373,10 @@ app.get('/api/routes', (_req: Request, res: Response) => {
 });
 
 app.get('/admin', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../public/admin-login.html'));
+});
+
+app.get('/admin/dashboard', (_req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../public/admin.html'));
 });
 

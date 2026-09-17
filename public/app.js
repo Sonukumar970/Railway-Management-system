@@ -216,7 +216,7 @@ const applyAuthState = () => {
     adminPanelButton?.classList.toggle('hidden', state.user.role !== 'admin');
 
     if (state.user.role === 'admin') {
-      window.location.href = '/admin';
+      window.location.href = '/admin/dashboard';
     }
     return;
   }
@@ -268,7 +268,7 @@ const attachAuthHandlers = () => {
   if (registerTab) registerTab.addEventListener('click', () => setAuthFormMode('register'));
   if (forgotPasswordBtn) forgotPasswordBtn.addEventListener('click', () => setAuthFormMode('reset'));
   if (backToLoginBtn) backToLoginBtn.addEventListener('click', () => setAuthFormMode('login'));
-  if (adminPanelButton) adminPanelButton.addEventListener('click', () => { window.location.href = '/admin'; });
+  if (adminPanelButton) adminPanelButton.addEventListener('click', () => { window.location.href = '/admin/dashboard'; });
 
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
