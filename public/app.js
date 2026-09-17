@@ -313,12 +313,12 @@ const attachAuthHandlers = () => {
         return;
       }
 
-      const result = await response.json();
-      state.user = result.user;
-      localStorage.setItem('railway-user', JSON.stringify(result.user));
+      await response.json();
+      state.user = null;
+      localStorage.removeItem('railway-user');
       registerForm.reset();
       setAuthFormMode('login');
-      applyAuthState();
+      alert('Account created successfully. Please login to continue.');
     });
   }
 
