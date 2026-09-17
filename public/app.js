@@ -204,6 +204,7 @@ const applyAuthState = () => {
   const authShell = document.getElementById('auth-shell');
   const dashboardShell = document.getElementById('dashboard-shell');
   const adminSection = document.getElementById('train-management-section');
+  const adminPanelButton = document.getElementById('admin-panel-btn');
 
   if (!authStatus || !authShell || !dashboardShell || !adminSection) return;
 
@@ -212,6 +213,7 @@ const applyAuthState = () => {
     authShell.classList.add('hidden');
     dashboardShell.classList.remove('hidden');
     adminSection.classList.toggle('hidden', state.user.role !== 'admin');
+    adminPanelButton?.classList.toggle('hidden', state.user.role !== 'admin');
 
     if (state.user.role === 'admin') {
       window.location.href = '/admin';
@@ -223,6 +225,7 @@ const applyAuthState = () => {
   authShell.classList.remove('hidden');
   dashboardShell.classList.add('hidden');
   adminSection.classList.add('hidden');
+  adminPanelButton?.classList.add('hidden');
 };
 
 const setAuthFormMode = (mode) => {
@@ -259,11 +262,13 @@ const attachAuthHandlers = () => {
   const registerTab = document.getElementById('show-register');
   const forgotPasswordBtn = document.getElementById('forgot-password-btn');
   const backToLoginBtn = document.getElementById('back-to-login-btn');
+  const adminPanelButton = document.getElementById('admin-panel-btn');
 
   if (loginTab) loginTab.addEventListener('click', () => setAuthFormMode('login'));
   if (registerTab) registerTab.addEventListener('click', () => setAuthFormMode('register'));
   if (forgotPasswordBtn) forgotPasswordBtn.addEventListener('click', () => setAuthFormMode('reset'));
   if (backToLoginBtn) backToLoginBtn.addEventListener('click', () => setAuthFormMode('login'));
+  if (adminPanelButton) adminPanelButton.addEventListener('click', () => { window.location.href = '/admin'; });
 
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {

@@ -53,7 +53,6 @@ interface StaffUser {
 
 const staffUsers: StaffUser[] = [
   { id: 'user-admin', username: 'admin', password: 'railway123', role: 'admin', name: 'Operations Admin' },
-  { id: 'user-staff', username: 'staff', password: 'staff123', role: 'staff', name: 'Station Staff' },
 ];
 
 const initialTrains: Train[] = [
