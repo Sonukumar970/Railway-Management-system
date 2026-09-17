@@ -121,7 +121,13 @@ const initialRoutes: RouteInfo[] = [
   { id: 'RT-321', from: 'Jaipur', to: 'Bhopal', distance: '620 km', duration: '9h 10m', trains: 1, status: 'Available' },
 ];
 
-const dataPath = process.env.VERCEL ? path.join('/tmp', 'railway-data') : path.join(__dirname, '../data');
+const isServerlessRuntime = Boolean(
+  process.env.VERCEL ||
+  process.env.NOW_REGION ||
+  __dirname.startsWith('/var/task') ||
+  process.cwd().startsWith('/var/task'),
+);
+const dataPath = isServerlessRuntime ? path.join('/tmp', 'railway-data') : path.join(__dirname, '../data');
 const stateFile = path.join(dataPath, 'state.json');
 
 const db = createDatabase(path.join(__dirname, '../data/railway.db'));
