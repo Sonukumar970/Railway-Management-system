@@ -349,6 +349,28 @@ app.post('/api/admin/login', (req: Request, res: Response) => {
   return res.json({ user: safeUser });
 });
 
+app.post('/api/staff/login', (req: Request, res: Response) => {
+  const { username, password } = req.body ?? {};
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Staff username and password are required.' });
+  }
+
+  const normalizedUsername = String(username).trim();
+  const user = staffUsers.find(
+    (entry) => entry.role === 'staff'
+      && entry.username.toLowerCase() === normalizedUsername.toLowerCase()
+      && entry.password === String(password),
+  );
+
+  if (!user) {
+    return res.status(401).json({ message: 'Staff access denied. Check your credentials.' });
+  }
+
+  const { password: _password, ...safeUser } = user;
+  return res.json({ user: safeUser });
+});
+
 app.get('/api/stations', (_req: Request, res: Response) => {
   res.json(stations);
 });

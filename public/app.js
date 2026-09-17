@@ -286,7 +286,7 @@ const attachAuthHandlers = () => {
       const formData = new FormData(loginForm);
       const payload = { username: formData.get('username'), password: formData.get('password') };
 
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/staff/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
