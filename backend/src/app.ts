@@ -122,9 +122,12 @@ const initialRoutes: RouteInfo[] = [
 
 const isServerlessRuntime = Boolean(
   process.env.VERCEL ||
+  process.env.VERCEL_ENV ||
+  process.env.VERCEL_URL ||
   process.env.NOW_REGION ||
   __dirname.startsWith('/var/task') ||
-  process.cwd().startsWith('/var/task'),
+  process.cwd().startsWith('/var/task') ||
+  process.platform !== 'win32',
 );
 const dataPath = isServerlessRuntime ? path.join('/tmp', 'railway-data') : path.join(__dirname, '../../data');
 const stateFile = path.join(dataPath, 'state.json');
